@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import plus.knowing.common.util.JsonUtils;
-import plus.knowing.sso.mall.configuration.prop.OSSConfigProperties;
+import plus.knowing.sso.mall.configuration.prop.SsoConfigProperties;
 import plus.knowing.sso.mall.exception.BizExceptionEnum;
 import plus.knowing.sso.mall.vo.CasUserVO;
 import plus.knowing.common.response.CommonJsonResponse;
@@ -30,7 +30,7 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
     private RestTemplate restTemplate;
 
     @Autowired
-    private OSSConfigProperties ossConfigProperties;
+    private SsoConfigProperties ssoConfigProperties;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -42,7 +42,7 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
         }
         String token = request.getHeader(TOKEN);
         CommonJsonResponse<CasUserVO> jsonResponse = restTemplate.getForObject(
-                String.format(ossConfigProperties.getAuthUrl(), token), CommonJsonResponse.class);
+                String.format(ssoConfigProperties.getAuthUrl(), token), CommonJsonResponse.class);
         CasUserVO casUserVO = JsonUtils.read(JsonUtils.writeValueAsString(jsonResponse.getData()), CasUserVO.class);
         BizExceptionEnum.NOT_LOGIN.assertNotNull(casUserVO);
         request.setAttribute("user", casUserVO);
