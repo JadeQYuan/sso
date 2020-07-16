@@ -38,7 +38,19 @@ PS:
 > 默认情况下，静态资源和模板改变不回触发自动重启。  
 > 可以使用触发文件，可定时/手动更新触发文件以自动重启。  
 
-## event & listener
+## 监听器
+1. 所有的监听器都需继承ApplicationListener<ApplicationEvent>。
+2. 所有的事件都需继承ApplicationEvent。
+3. 可以自定义事件，自定义监听器，监听器只会监听配置的事件及其子类。
+
+## 拦截器
+1. 定义。实现HandleInterceptor接口，根据情况实现其对应的方法。
+2. 注册。继承WebMvcConfigurationSupport 或 实现WebMvcConfigurer接口，重写addInterceptors方法。  
+PS: 使用拦截器拦截全部请求路径会导致静态资源也不能访问，可以根据情况进行配置。
+
+## 过滤器
+1. 使用@WebFilfer注解配置。
+2. 实现Filter接口。
 
 ## CommandLineRunner & ApplicationRunner
 > 在SpringApplication.run(...)完成之前调用。  
