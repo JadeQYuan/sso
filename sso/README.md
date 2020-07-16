@@ -26,8 +26,8 @@ Central Authentication Service 中央认证服务。
 
 ## 可提升优化
 ### 前端
-1. 页面跳转带着原地址的写法。
-2. 认证之后跳转回去token放在路径中，可能会不安全。
+1. 页面跳转带着原地址的写法（已处理）。
+2. 认证之后跳转回去token放在路径中，可能会不安全（已处理）。
 3. LocalStorage中没有时间限制，可以根据业务场景，选择Cookie或者SessionStorage进行存储。
 
 ### 后端
@@ -35,5 +35,24 @@ Central Authentication Service 中央认证服务。
 2. token没有限制时长，现在是直接放在map里面，可以放在缓存中并指定缓存的失效时间及失效策略。
 3. 拦截器可对某些接口放行，不一定所有请求都需要拦截。
 4. 登录成功之后应返回token及token的失效时间。
+
+## 升级
+> 使用页面跳转的方式来处理cookie/webStorage共享的方式会使整个页面重新加载，这个现象不是我们想要的。
+
+### 浏览器同源策略
+只有同协议、同域名、同端口的Cookie、WebStorage数据可以共享，其它数据不能共享。
+
+### 使用Cookie做SSO
+1. 同域： 将sessionId保存在二级域名下即可。
+2. 同父域： 将sessionId保存在顶级域名下即可。
+3. 不同域：使用JSONP跨域请求及302临时重定向处理页面跳转问题。
+
+### 使用WebStorage做SSO
+使用PostMessage + iframe的方式来处理页面跳转问题。本项目使用此方式。
+
+### Cookie 与 WebStorage
+1. 如果将数据保存在Cookie中，发送请求时会将所有cookie带上，而WebStorage不会。
+2. Cookie大小在1K左右，而WebStorage在3M左右。
+3. 如果将Cookie的域名设置为顶级域名，那么其二级域名是都可以拿到的。而WebStorage只能拿到当前域名下的。
 
 ***END***

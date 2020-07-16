@@ -1,34 +1,58 @@
 <template>
   <div class="home">
     <h4>首页</h4>
-    <div>{{user.name}}</div>
+    <div>{{ user.name }}</div>
+    <iframe
+      src="http://localhost:9010/login"
+      class="iframe"
+      ref="iframe"
+      style="display:none"
+    ></iframe>
   </div>
 </template>
 
 <script>
-  import {me} from "@/api/user";
+import { me } from "@/api/user";
 
-  export default {
-    name: "Home",
-    data() {
-      return {
-        user: {
-          name: ""
-        }
-      }
-    },
-    mounted() {
-      let token = this.$route.query.token;
+window.addEventListener(
+  "message",
+  event => {
+    if (event.origin === "http://localhost:9010") {
+      const token = event.data.token;
       if (token) {
         localStorage.setItem("token", token);
-        this.$router.push("/");
+      } else {
+        window.location.href =
+          "http://localhost:9010/login?from=http://localhost:9110";
       }
-      me().then(data => {
-        this.user = data.data;
-      }).catch(error => {
-        window.location.href = "http://localhost:9010/login?from=http://localhost:9110" + this.$route.fullPath;
-        console.log(error);
-      })
     }
-  };
+  },
+  false
+);
+export default {
+  name: "Home",
+  data() {
+    return {
+      user: {
+        name: ""
+      }
+    };
+  },
+  mounted() {
+    me()
+      .then(data => {
+        this.user = data.data;
+      })
+      .catch(error => {
+        if (error.code === 10001) {
+          this.$refs.iframe.contentWindow.postMessage(
+            "",
+            this.$refs.iframe.src
+          );
+        } else {
+          console.log(error);
+        }
+      });
+  }
+};
 </script>

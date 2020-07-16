@@ -48,6 +48,21 @@
 
 <script>
 import { login, auth } from "@/api/auth";
+
+window.addEventListener(
+  "message",
+  event => {
+    console.log(event);
+    if (
+      event.origin === "http://localhost:9010" ||
+      event.origin === "http://localhost:9110" ||
+      event.origin === "http://localhost:9210"
+    ) {
+      window.parent.postMessage({ token: localStorage.getItem("token") }, "*");
+    }
+  },
+  false
+);
 export default {
   data() {
     return {
@@ -60,28 +75,30 @@ export default {
   },
   mounted() {
     this.from = this.$route.query.from;
-    let item = localStorage.getItem('token');
+    let item = localStorage.getItem("token");
     if (item) {
-      auth({"token" : item}).then(() => {
+      auth({ token: item }).then(() => {
         if (this.from) {
           window.location.href = this.from + "?token=" + item;
         } else {
-          this.$router.push({ path: '/' });
+          this.$router.push({ path: "/" });
         }
       });
     }
   },
   methods: {
     doLogin() {
-      login(this.loginForm).then(data => {
-        localStorage.setItem('token', data.data);
-        if (this.from) {
-          window.location.href = this.from;
-        } else {
-          this.$router.push({ path: '/' });
-        }
-      }).catch(error => {
-        console.log(error);
+      login(this.loginForm)
+        .then(data => {
+          localStorage.setItem("token", data.data);
+          if (this.from) {
+            window.location.href = this.from;
+          } else {
+            this.$router.push({ path: "/" });
+          }
+        })
+        .catch(error => {
+          console.log(error);
         });
     }
   }
