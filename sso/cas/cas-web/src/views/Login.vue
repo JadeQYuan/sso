@@ -1,45 +1,46 @@
 <template>
   <div class="login__container-user">
     <el-form
-      ref="loginForm"
-      class="form"
-      :model="loginForm"
-      label-position="left"
+        ref="loginForm"
+        class="form"
+        :model="loginForm"
+        label-position="left"
     >
       <h1 class="login__title">账户登录</h1>
       <el-form-item prop="mobile" style="margin-bottom: 22px">
         <el-input
-          v-model="loginForm.mobile"
-          name="mobile"
-          type="text"
-          placeholder="请输入手机号"
+            v-model="loginForm.mobile"
+            name="mobile"
+            type="text"
+            placeholder="请输入手机号"
         />
       </el-form-item>
       <el-form-item prop="password">
         <el-input
-          v-model="loginForm.password"
-          name="password"
-          type="password"
-          placeholder="请输入密码"
+            v-model="loginForm.password"
+            name="password"
+            type="password"
+            placeholder="请输入密码"
         />
       </el-form-item>
       <div style="display: inline-block;width: 100%;margin-bottom: 10px;">
-        <div style="display:inline-block" />
+        <div style="display:inline-block"/>
         <el-popover
-          placement="right"
-          title=""
-          width="200"
-          trigger="hover"
-          class="popover_box"
+            placement="right"
+            title=""
+            width="200"
+            trigger="hover"
+            class="popover_box"
         >
         </el-popover>
       </div>
       <el-form-item>
         <el-button
-          type="primary"
-          style="width:100%;"
-          @click.native.prevent="doLogin"
-          >登录</el-button
+            type="primary"
+            style="width:100%;"
+            @click.native.prevent="doLogin"
+        >登录
+        </el-button
         >
       </el-form-item>
     </el-form>
@@ -47,21 +48,21 @@
 </template>
 
 <script>
-import { login, auth } from "@/api/auth";
+import {login, auth} from "@/api/auth";
 
 window.addEventListener(
-  "message",
-  event => {
-    console.log(event);
-    if (
-      event.origin === "http://localhost:9010" ||
-      event.origin === "http://localhost:9110" ||
-      event.origin === "http://localhost:9210"
-    ) {
-      window.parent.postMessage({ token: localStorage.getItem("token") }, "*");
-    }
-  },
-  false
+    "message",
+    event => {
+      console.log(event);
+      if (
+          event.origin === "http://localhost:9010" ||
+          event.origin === "http://localhost:9110" ||
+          event.origin === "http://localhost:9210"
+      ) {
+        window.parent.postMessage({token: localStorage.getItem("token")}, "*");
+      }
+    },
+    false
 );
 export default {
   data() {
@@ -77,11 +78,11 @@ export default {
     this.from = this.$route.query.from;
     let item = localStorage.getItem("token");
     if (item) {
-      auth({ token: item }).then(() => {
+      auth({token: item}).then(() => {
         if (this.from) {
           window.location.href = this.from + "?token=" + item;
         } else {
-          this.$router.push({ path: "/" });
+          this.$router.push({path: "/"});
         }
       });
     }
@@ -89,17 +90,17 @@ export default {
   methods: {
     doLogin() {
       login(this.loginForm)
-        .then(data => {
-          localStorage.setItem("token", data.data);
-          if (this.from) {
-            window.location.href = this.from;
-          } else {
-            this.$router.push({ path: "/" });
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          .then(data => {
+            localStorage.setItem("token", data.data);
+            if (this.from) {
+              window.location.href = this.from;
+            } else {
+              this.$router.push({path: "/"});
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
   }
 };
