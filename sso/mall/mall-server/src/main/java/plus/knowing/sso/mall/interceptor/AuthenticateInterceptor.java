@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 权限验证拦截器
- * @author sheng
  *
+ * @author sheng
  */
 @Component
 @Slf4j
@@ -37,7 +37,7 @@ public class AuthenticateInterceptor implements HandlerInterceptor {
         log.info(String.format("request[Method: '%s', RequestURI: '%s', RemoteAddr: '%s']", request.getMethod(),
                 request.getRequestURI(), request.getRemoteAddr()));
         // 登陆权限验证
-        if(RequestMethod.OPTIONS.name().equals(request.getMethod())) {
+        if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
             return true;
         }
         String token = request.getHeader(TOKEN);

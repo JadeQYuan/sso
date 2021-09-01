@@ -7,6 +7,7 @@ public interface IAuthService {
 
     /**
      * 用户登录
+     *
      * @param loginVO
      * @return
      */
@@ -14,6 +15,7 @@ public interface IAuthService {
 
     /**
      * 认证
+     *
      * @param token
      * @return
      */
