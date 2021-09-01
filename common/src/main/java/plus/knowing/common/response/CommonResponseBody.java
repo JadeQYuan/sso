@@ -43,11 +43,11 @@ public class CommonResponseBody implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
                                   Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if(body instanceof CommonJsonResponse || request.getURI().getPath().startsWith("/swagger")) {
+        if (body instanceof CommonJsonResponse || request.getURI().getPath().startsWith("/swagger")) {
             return body;
         }
         CommonJsonResponse<Object> commonJsonResponse = CommonJsonResponse.newSuccessResponse(body);
-        if(Objects.nonNull(returnType.getMethod()) && returnType.getMethod().getReturnType().equals(String.class)
+        if (Objects.nonNull(returnType.getMethod()) && returnType.getMethod().getReturnType().equals(String.class)
                 || body instanceof String) {
             return JsonUtils.writeValueAsString(commonJsonResponse);
         }
@@ -80,8 +80,8 @@ public class CommonResponseBody implements ResponseBodyAdvice<Object> {
         String errMessage;
         if (e instanceof MethodArgumentNotValidException) {
             errMessage = wrapperBindingResult(((MethodArgumentNotValidException) e).getBindingResult());
-        } else if(e instanceof BindException) {
-           errMessage = wrapperBindingResult(((BindException) e).getBindingResult());
+        } else if (e instanceof BindException) {
+            errMessage = wrapperBindingResult(((BindException) e).getBindingResult());
         } else {
             errMessage = e.getMessage();
         }
@@ -92,11 +92,11 @@ public class CommonResponseBody implements ResponseBodyAdvice<Object> {
     @ExceptionHandler(BaseException.class)
     @ResponseBody
     public CommonJsonResponse<Object> handleServiceException(Exception e) {
-        if(e instanceof BizException) {
+        if (e instanceof BizException) {
             BizException bizException = (BizException) e;
             log.error("【业务异常】{}", bizException.getErrMessage());
             return CommonJsonResponse.newErrorResponse(bizException.getErrCode(), bizException.getErrMessage());
-        } else if(e instanceof SysException) {
+        } else if (e instanceof SysException) {
             SysException sysException = (SysException) e;
             log.error("【系统异常】{}", sysException.getErrMessage(), e);
             return CommonJsonResponse.newErrorResponse(sysException.getErrCode(), sysException.getErrMessage());

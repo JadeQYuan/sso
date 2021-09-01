@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class RestTemplateConfiguration {
 
     @Bean
-    public RestTemplate restTemplate(ClientHttpRequestFactory factory){
+    public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
         StringHttpMessageConverter m = new StringHttpMessageConverter(StandardCharsets.UTF_8);
         RestTemplate restTemplate = new RestTemplate(factory);
         restTemplate.getMessageConverters().add(0, m);
@@ -21,7 +21,7 @@ public class RestTemplateConfiguration {
     }
 
     @Bean
-    public ClientHttpRequestFactory simpleClientHttpRequestFactory(){
+    public ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setReadTimeout(5000);//单位为ms
         factory.setConnectTimeout(5000);//单位为ms

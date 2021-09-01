@@ -11,7 +11,8 @@ public class GuavaCacheManager implements ICacheManager {
 
     private Cache<String, Object> cache;
 
-    public GuavaCacheManager() {}
+    public GuavaCacheManager() {
+    }
 
     public void buildCache(Cache<String, Object> cache) {
         this.cache = cache;
@@ -41,7 +42,7 @@ public class GuavaCacheManager implements ICacheManager {
         // 使用 (T) cache.get(key, () -> function.apply(funcParam)) 会将结果存起来
         T obj = (T) cache.getIfPresent(key);
         if (Objects.isNull(obj) && Objects.nonNull(function)) {
-            obj =  function.apply(funcParam);
+            obj = function.apply(funcParam);
         }
         return obj;
     }

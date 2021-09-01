@@ -12,7 +12,8 @@ public class ConvertUtil {
 
     /**
      * DBList 转 VOList
-     *  VO需要（DB, VOTypeEnum）的构造函数
+     * VO需要（DB, VOTypeEnum）的构造函数
+     *
      * @param list
      * @param toClass
      * @param <T>

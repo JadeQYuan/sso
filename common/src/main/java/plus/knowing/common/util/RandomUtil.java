@@ -8,12 +8,14 @@ import java.util.UUID;
  */
 public class RandomUtil {
 
-    private RandomUtil() {}
+    private RandomUtil() {
+    }
 
     private static Random random = new Random(System.currentTimeMillis());
 
     /**
      * 获取UUID
+     *
      * @return
      */
     public static String uuid() {
@@ -22,12 +24,13 @@ public class RandomUtil {
 
     /**
      * 生成指定长度的随机字符串
+     *
      * @param len
      * @return
      */
     public static String generateByLength(int len) {
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i) {
             sb.append(random.nextInt(10));
         }
         return sb.toString();
@@ -35,6 +38,7 @@ public class RandomUtil {
 
     /**
      * 根据最大值生成随机字符串
+     *
      * @param bound
      * @return
      */

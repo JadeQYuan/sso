@@ -21,7 +21,7 @@ public class JsonUtils {
                 .timeZone("GMT+8") // 设置时区
                 .failOnUnknownProperties(false) // 位置属性不抛出异常
                 .serializationInclusion(JsonInclude.Include.NON_NULL) // 忽略null属性
-                ;
+        ;
         objectMapper = builder.build();
     }
 
