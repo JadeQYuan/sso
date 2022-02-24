@@ -1,6 +1,7 @@
 package plus.knowing.common.exception;
 
 import lombok.Getter;
+import plus.knowing.common.response.ResponseInstance;
 
 @Getter
 public class BaseException extends RuntimeException {
@@ -9,21 +10,21 @@ public class BaseException extends RuntimeException {
 
     private final String errMessage;
 
-    BaseException(IExceptionInstance exceptionInstance) {
-        super(exceptionInstance.getErrMessage());
-        this.errCode = exceptionInstance.getErrCode();
-        this.errMessage = exceptionInstance.getErrMessage();
+    BaseException(ResponseInstance responseInstance) {
+        super(responseInstance.getMessage());
+        this.errCode = responseInstance.getCode();
+        this.errMessage = responseInstance.getMessage();
     }
 
-    BaseException(IExceptionInstance exceptionInstance, String errMessage) {
+    BaseException(ResponseInstance responseInstance, String errMessage) {
         super(errMessage);
-        this.errCode = exceptionInstance.getErrCode();
+        this.errCode = responseInstance.getCode();
         this.errMessage = errMessage;
     }
 
-    BaseException(IExceptionInstance exceptionInstance, Throwable cause) {
-        super(exceptionInstance.getErrMessage(), cause);
-        this.errCode = exceptionInstance.getErrCode();
-        this.errMessage = exceptionInstance.getErrMessage();
+    BaseException(ResponseInstance responseInstance, Throwable cause) {
+        super(responseInstance.getMessage(), cause);
+        this.errCode = responseInstance.getCode();
+        this.errMessage = responseInstance.getMessage();
     }
 }

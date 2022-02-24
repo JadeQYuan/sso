@@ -3,14 +3,12 @@ package plus.knowing.common.response;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import plus.knowing.common.exception.BaseException;
 
-import java.io.Serializable;
-
-@SuppressWarnings("serial")
 @NoArgsConstructor
 @Getter
 @ToString
-public class CommonJsonResponse<T> implements Serializable {
+public class CommonJsonResponse<T> implements ResponseInstance {
 
     private Integer code;
 
@@ -23,7 +21,7 @@ public class CommonJsonResponse<T> implements Serializable {
      */
     private CommonJsonResponse(ResponseConstEnum respConst) {
         this.code = respConst.getCode();
-        this.message = respConst.getMsg();
+        this.message = respConst.getMessage();
     }
 
     /**
@@ -31,7 +29,7 @@ public class CommonJsonResponse<T> implements Serializable {
      */
     private CommonJsonResponse(T data) {
         this.code = ResponseConstEnum.SUCCESS.getCode();
-        this.message = ResponseConstEnum.SUCCESS.getMsg();
+        this.message = ResponseConstEnum.SUCCESS.getMessage();
         this.data = data;
     }
 
@@ -62,13 +60,16 @@ public class CommonJsonResponse<T> implements Serializable {
     }
 
     /**
-     * 返回通用异常对象
+     * 返回未知异常对象
      */
     public static <T> CommonJsonResponse<T> newErrorResponse() {
         return new CommonJsonResponse<>(ResponseConstEnum.ERROR);
     }
 
-    public static <T> CommonJsonResponse<T> newErrorResponse(int code, String msg) {
-        return new CommonJsonResponse<>(code, msg);
+    /**
+     * 返回服务端异常对象
+     */
+    public static <T> CommonJsonResponse<T> newErrorResponse(BaseException baseException) {
+        return new CommonJsonResponse<>(baseException.getErrCode(), baseException.getErrMessage());
     }
 }

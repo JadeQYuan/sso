@@ -1,19 +1,20 @@
 package plus.knowing.common.exception;
 
 import lombok.Getter;
+import plus.knowing.common.response.ResponseInstance;
 
 @Getter
 public class SysException extends BaseException {
 
-    SysException(IExceptionInstance exceptionInstance) {
-        super(exceptionInstance);
+    SysException(ResponseInstance responseInstance) {
+        super(responseInstance);
     }
 
-    SysException(IExceptionInstance exceptionInstance, String errMessage) {
-        super(exceptionInstance, errMessage);
+    SysException(ResponseInstance responseInstance, String errMessage) {
+        super(responseInstance, errMessage);
     }
 
-    SysException(IExceptionInstance exceptionInstance, Throwable cause) {
-        super(exceptionInstance, cause);
+    SysException(ResponseInstance responseInstance, Throwable cause) {
+        super(responseInstance, cause);
     }
 }

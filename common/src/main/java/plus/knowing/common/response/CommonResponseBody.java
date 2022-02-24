@@ -95,11 +95,11 @@ public class CommonResponseBody implements ResponseBodyAdvice<Object> {
         if (e instanceof BizException) {
             BizException bizException = (BizException) e;
             log.error("【业务异常】{}", bizException.getErrMessage());
-            return CommonJsonResponse.newErrorResponse(bizException.getErrCode(), bizException.getErrMessage());
+            return CommonJsonResponse.newErrorResponse(bizException);
         } else if (e instanceof SysException) {
             SysException sysException = (SysException) e;
             log.error("【系统异常】{}", sysException.getErrMessage(), e);
-            return CommonJsonResponse.newErrorResponse(sysException.getErrCode(), sysException.getErrMessage());
+            return CommonJsonResponse.newErrorResponse(sysException);
         }
         return CommonJsonResponse.newErrorResponse();
     }

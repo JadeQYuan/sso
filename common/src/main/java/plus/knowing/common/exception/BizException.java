@@ -1,19 +1,20 @@
 package plus.knowing.common.exception;
 
 import lombok.Getter;
+import plus.knowing.common.response.ResponseInstance;
 
 @Getter
 public class BizException extends BaseException {
 
-    BizException(IExceptionInstance exceptionInstance) {
-        super(exceptionInstance);
+    BizException(ResponseInstance responseInstance) {
+        super(responseInstance);
     }
 
-    BizException(IExceptionInstance exceptionInstance, String errMessage) {
-        super(exceptionInstance, errMessage);
+    BizException(ResponseInstance responseInstance, String errMessage) {
+        super(responseInstance, errMessage);
     }
 
-    BizException(IExceptionInstance exceptionInstance, Throwable cause) {
-        super(exceptionInstance, cause);
+    BizException(ResponseInstance responseInstance, Throwable cause) {
+        super(responseInstance, cause);
     }
 }

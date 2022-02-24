@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-public class GuavaCacheManager implements ICacheManager {
+public class GuavaCacheManager implements CacheManager {
 
     private Cache<String, Object> cache;
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import plus.knowing.common.exception.SysExceptionEnum;
+import plus.knowing.common.exception.SysResponseEnum;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class JsonUtils {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw SysExceptionEnum.SYS_EXCEPTION.newException(e);
+            throw SysResponseEnum.SYS_EXCEPTION.newException(e);
         }
     }
 
@@ -37,7 +37,7 @@ public class JsonUtils {
         try {
             return objectMapper.readValue(text, valueType);
         } catch (IOException e) {
-            throw SysExceptionEnum.SYS_EXCEPTION.newException(e);
+            throw SysResponseEnum.SYS_EXCEPTION.newException(e);
         }
     }
 
@@ -46,7 +46,7 @@ public class JsonUtils {
             JavaType valueType = objectMapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
             return objectMapper.readValue(text, valueType);
         } catch (IOException e) {
-            throw SysExceptionEnum.SYS_EXCEPTION.newException(e);
+            throw SysResponseEnum.SYS_EXCEPTION.newException(e);
         }
     }
 
@@ -55,7 +55,7 @@ public class JsonUtils {
             JavaType valueType = objectMapper.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
             return objectMapper.readValue(text, valueType);
         } catch (IOException e) {
-            throw SysExceptionEnum.SYS_EXCEPTION.newException(e);
+            throw SysResponseEnum.SYS_EXCEPTION.newException(e);
         }
     }
 }

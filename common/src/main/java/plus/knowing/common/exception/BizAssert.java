@@ -1,6 +1,8 @@
 package plus.knowing.common.exception;
 
-public interface BizAssert extends Assert, IExceptionInstance {
+import plus.knowing.common.response.ResponseInstance;
+
+public interface BizAssert extends Assert, ResponseInstance {
 
     @Override
     default BaseException newException() {
